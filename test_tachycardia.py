@@ -29,9 +29,7 @@ def test_punct_spaces_tachycardic(word, expected):
 
 
 @pytest.mark.parametrize("word, expected", [
-                        ('tech cardio', False),
-                        ('tachy cards', False),
-                        ('ACHY CARDIO!', False),
+                        ('ACHEY CARDIO!', False),
                         ('tech car?', False),
                         ('tetrahedron (', False),
                         ('cardiology!', False),
@@ -50,5 +48,31 @@ def test_not_tachycardic(word, expected):
                         ('Theyaretachycardic.', True),
                         ])
 def test_format_tachycardic(word, expected):
+    answer = is_tachycardic(word)
+    assert answer == expected
+
+
+@pytest.mark.parametrize("word, expected", [
+                        ('t a k h y c a r d 1 c', True),
+                        ('+achcardic', True),
+                        ('tachicardia', True),
+                        ('--tachycartic', True),
+                        ('tachykardik', True),
+                        ('achycardi', True),
+                        ('T4chycadic', True),
+                        ])
+def test_close_tachycardic(word, expected):
+    answer = is_tachycardic(word)
+    assert answer == expected
+
+
+@pytest.mark.parametrize("word, expected", [
+                        ('t a k h y k a r d o c', False),
+                        ('+achcadc', False),
+                        ('ackycadic', False),
+                        ('tttachycart', False),
+                        ('tpachycard', False),
+                        ])
+def test_not_close_tachycardic(word, expected):
     answer = is_tachycardic(word)
     assert answer == expected
